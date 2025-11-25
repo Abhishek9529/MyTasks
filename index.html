@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow Dashboard</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Prevent body scroll */
+        }
+        /* Custom styles for the active navigation item background */
+        .active-nav-item {
+            background-color: #e0f2fe; /* light blue-100 */
+            color: #1d4ed8; /* blue-700 */
+            border-radius: 0.5rem;
+        }
+        /* Style for the TaskFlow logo circle */
+        .logo-circle {
+            background-image: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); /* Blue gradient */
+            box-shadow: 0 4px 10px rgba(29, 78, 216, 0.4);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'task-blue': '#1d4ed8',
+                        'task-light-blue': '#e0f2fe',
+                        'task-sidebar-bg': '#ffffff',
+                        'task-main-bg': '#f4f7fa',
+                    }
+                }
+            }
+        }
+
+        // JavaScript for tab switching
+        function setActiveTab(tabElement) {
+            const tabs = document.querySelectorAll('.tab-item');
+            tabs.forEach(tab => {
+                tab.classList.remove('font-bold', 'border-b-2', 'border-task-blue', 'text-gray-800');
+                tab.classList.add('text-gray-500');
+            });
+
+            tabElement.classList.add('font-bold', 'border-b-2', 'border-task-blue', 'text-gray-800');
+            tabElement.classList.remove('text-gray-500');
+
+            // Optionally, you could load different content here based on the selected tab (All, Today, Upcoming)
+            console.log(`Switched to tab: ${tabElement.textContent.trim()}`);
+        }
+
+        // JavaScript for navigation link activation
+        function setActiveNav(navElement) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active-nav-item');
+                item.classList.remove('text-task-blue');
+                item.classList.add('text-gray-500');
+            });
+
+            navElement.classList.add('active-nav-item', 'text-task-blue');
+            navElement.classList.remove('text-gray-500');
+        }
+    </script>
+</head>
+
+<body class="bg-task-main-bg min-h-screen flex antialiased">
+
+    <!-- 1. Sidebar -->
+    <div class="hidden md:flex w-64 flex-shrink-0 bg-task-sidebar-bg border-r border-gray-200 flex-col justify-between py-6 h-screen">
+        <div class="px-6">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 mb-10">
+                <div class="logo-circle w-6 h-6 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.007 12.007 0 002.944 12c0 2.21 0.702 4.29 1.904 5.918A11.955 11.955 0 0112 21.056c2.21 0 4.29-.702 5.918-1.904A12.007 12.007 0 0021.056 12c0-2.21-.702-4.29-1.904-5.918z"></path></svg>
+                </div>
+                <span class="text-xl font-semibold text-gray-800">TaskFlow</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <!-- Dashboard -->
+                <a href="#" class="nav-item flex items-center px-4 py-3 text-gray-500 rounded-lg transition duration-150 ease-in-out" onclick="setActiveNav(this)">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Dashboard
+                </a>
+
+                <!-- My Tasks (Active) -->
+                <a href="#" class="nav-item flex items-center px-4 py-3 active-nav-item text-task-blue rounded-lg transition duration-150 ease-in-out" onclick="setActiveNav(this)">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 002 2h2a2 2 0 002-2"></path></svg>
+                    My Tasks
+                </a>
+
+                <!-- Projects -->
+                <a href="#" class="nav-item flex items-center px-4 py-3 text-gray-500 rounded-lg transition duration-150 ease-in-out" onclick="setActiveNav(this)">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                    Projects
+                </a>
+                
+                <!-- Tags -->
+                <a href="#" class="nav-item flex items-center px-4 py-3 text-gray-500 rounded-lg transition duration-150 ease-in-out" onclick="setActiveNav(this)">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h.01M17 17h.01M17 21h.01M21 7l-9-9-9 9M7 17v-4h10v4M7 17h10"></path></svg>
+                    Tags
+                </a>
+
+                <!-- Reports -->
+                <a href="#" class="nav-item flex items-center px-4 py-3 text-gray-500 rounded-lg transition duration-150 ease-in-out" onclick="setActiveNav(this)">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-4m-2 4v-4m4 4v-4m2 4v-4m2 4h.01M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Reports
+                </a>
+            </nav>
+        </div>
+
+        <!-- User Profile -->
+        <div class="px-6 border-t border-gray-200 pt-4">
+            <div class="flex items-center space-x-3">
+                <img class="w-8 h-8 rounded-full object-cover" src="https://placehold.co/32x32/5eead4/000000?text=OC" alt="Olivia Chen">
+                <span class="text-sm font-medium text-gray-700">Olivia Chen</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Main Content -->
+    <main class="flex-1 overflow-auto p-6 md:p-10">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Header -->
+            <header class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-gray-900">My Tasks</h1>
+                <div class="flex space-x-3">
+                    <!-- New Task Button -->
+                    <button class="bg-task-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out flex items-center">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        New Task
+                    </button>
+                    <!-- Filter Button -->
+                    <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold py-2 px-3 rounded-lg shadow-sm transition duration-150 ease-in-out flex items-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414A1 1 0 0010 17v2a1 1 0 01-2 0v-2a1 1 0 00-.293-.707L3.293 8.293A1 1 0 013 7.586V4z"></path></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-200 mb-6 space-x-6">
+                <a href="#" class="tab-item text-gray-500 py-3 transition duration-150 ease-in-out" onclick="setActiveTab(this)">All</a>
+                <a href="#" class="tab-item text-gray-500 py-3 transition duration-150 ease-in-out" onclick="setActiveTab(this)">Today</a>
+                <a href="#" class="tab-item font-bold border-b-2 border-task-blue text-gray-800 py-3 transition duration-150 ease-in-out" onclick="setActiveTab(this)">Upcoming</a>
+            </div>
+
+            <!-- Task Grid (To Do & Completed) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- 2.1 To Do Column -->
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-500 mb-4">To Do</h2>
+                    <div class="space-y-6">
+                        
+                        <!-- Task Card 1: Project Proposal (Work - Blue) -->
+                        <div class="bg-white p-5 border-l-4 border-blue-500 rounded-lg shadow-sm hover:shadow-md transition duration-200">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-gray-900">Project Proposal</h3>
+                                <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">Work</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-4">Due: Oct 26</p>
+                            
+                            <!-- Subtasks -->
+                            <div class="space-y-2">
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 mr-2 focus:ring-blue-500">
+                                    Draft introduction
+                                </label>
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 mr-2 focus:ring-blue-500">
+                                    Outline main points
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Task Card 2: Grocery Shopping (Personal - Green) -->
+                        <div class="bg-white p-5 border-l-4 border-green-500 rounded-lg shadow-sm hover:shadow-md transition duration-200">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-gray-900">Grocery Shopping</h3>
+                                <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">Personal</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-4">Due: Oct 27</p>
+                            
+                            <!-- Subtasks -->
+                            <div class="space-y-2">
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-green-600 rounded border-gray-300 mr-2 focus:ring-green-500">
+                                    Research competitors
+                                </label>
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-green-600 rounded border-gray-300 mr-2 focus:ring-green-500">
+                                    Buy vegetables
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Task Card 3: Call Mom (Orange) -->
+                        <div class="bg-white p-5 border-l-4 border-orange-500 rounded-lg shadow-sm hover:shadow-md transition duration-200">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-gray-900">Call Mom</h3>
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.586a2 2 0 010 2.828L11.828 15.657m-2.828 2.828L7 19h2l3.414-3.414m-3.414 0L7 17h2l3.414-3.414M17 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2h-2z"></path></svg>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-4">Due: Today</p>
+                            
+                            <!-- Subtasks -->
+                            <div class="space-y-2">
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 rounded border-gray-300 mr-2 focus:ring-orange-500">
+                                    Milk
+                                </label>
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 rounded border-gray-300 mr-2 focus:ring-orange-500">
+                                    Eggs
+                                </label>
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 rounded border-gray-300 mr-2 focus:ring-orange-500">
+                                    Bread
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.2 Completed Column -->
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-500 mb-4">Completed</h2>
+                    <div class="space-y-6">
+                        
+                        <!-- Completed Card 1: Finish Report -->
+                        <div class="bg-white p-5 border-l-4 border-gray-300 rounded-lg shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-gray-900">Finish Report</h3>
+                                <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                            </div>
+                            
+                            <!-- Completed Subtasks -->
+                            <div class="space-y-2">
+                                <label class="flex items-center text-gray-400 text-sm line-through">
+                                    <input type="checkbox" checked disabled class="form-checkbox h-4 w-4 text-green-600 rounded border-gray-300 mr-2 focus:ring-green-500">
+                                    Draft introduction
+                                </label>
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-green-600 rounded border-gray-300 mr-2 focus:ring-green-500">
+                                    Analyze data
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Completed Card 2: Pay Bills -->
+                        <div class="bg-white p-5 border-l-4 border-gray-300 rounded-lg shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-gray-900">Pay Bills</h3>
+                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 018.618 3.04A12.007 12.007 0 0021.056 12c0 2.21-.702 4.29-1.904 5.918A11.955 11.955 0 0112 21.056c-2.21 0-4.29-.702-5.918-1.904A12.007 12.007 0 002.944 12c0-2.21.702-4.29 1.904-5.918z"></path></svg>
+                            </div>
+                            
+                            <!-- Subtasks -->
+                            <div class="space-y-2">
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-600 rounded border-gray-300 mr-2 focus:ring-gray-500">
+                                    Rent
+                                </label>
+                                <label class="flex items-center text-gray-700 text-sm">
+                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-600 rounded border-gray-300 mr-2 focus:ring-gray-500">
+                                    Utilities
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
+<script>
+    // Initialize the active state for the "Upcoming" tab on load
+    document.addEventListener('DOMContentLoaded', () => {
+        const upcomingTab = document.querySelector('.tab-item:nth-child(3)');
+        if (upcomingTab) {
+            setActiveTab(upcomingTab);
+        }
+    });
+</script>
